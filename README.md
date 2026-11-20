@@ -61,37 +61,7 @@ AC remote (IR, sent by the ESP32) and TV remote (ADB over Wi-Fi).
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    subgraph ESP["ESP32-S3 (ESP-IDF, C)"]
-        DHT["DHT22 sensor"]
-        IRRX["IR receiver<br/>(learning)"]
-        IRTX["IR LED<br/>(transmit)"]
-    end
-
-    subgraph PHONE["Android phone · Termux"]
-        MQ["Mosquitto<br/>MQTT broker"]
-        API["FastAPI server<br/>(Python)"]
-        WD["Watchdog"]
-    end
-
-    WEB["Web app<br/>HTML · CSS · JS"]
-    TV["Android TV boxes"]
-    AC["Air conditioner"]
-    CLOUD["Gemini / Groq<br/>Open-Meteo · Telegram"]
-    REMOTE["Original AC remote"]
-
-    DHT -- "readings" --> ESP
-    ESP <-- "MQTT" --> MQ
-    MQ <--> API
-    REMOTE -. "IR (learning)" .-> IRRX
-    IRTX -. "IR" .-> AC
-    API -- "ADB over Wi-Fi" --> TV
-    WEB <-- "HTTP" --> API
-    API <--> CLOUD
-    WD -- "health checks" --> API
-    WD -- "alerts" --> CLOUD
-```
+<img src="docs/images/architecture.jpg" alt="Architecture: ESP32-S3 talks MQTT to the server on the Android phone, which serves the web app, controls the TV boxes over ADB and uses cloud services" width="100%">
 
 ## Hardware
 
