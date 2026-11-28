@@ -93,7 +93,12 @@ No cloud server, no subscription, no open ports on the router: everything runs a
 
 ## Hardware
 
-<!-- TODO: add docs/images/esp32.jpg and docs/images/phone_server.jpg -->
+<table>
+  <tr>
+    <td width="50%" valign="top"><img src="docs/images/esp32.jpg" alt="ESP32-S3 prototype on a breadboard"><br><sub><b>ESP32-S3</b> prototype on a breadboard: DHT22 sensor, IR receiver and IR LED</sub></td>
+    <td width="50%" valign="top"><img src="docs/images/phone_server.jpg" alt="Termux on the Galaxy A12 server"><br><sub><b>The Galaxy A12 (SM-A127F) server</b> in Termux: 53 days of uptime, with the server, Mosquitto, SSH and the watchdog running</sub></td>
+  </tr>
+</table>
 
 | Part | Role |
 |---|---|
@@ -112,7 +117,7 @@ No cloud server, no subscription, no open ports on the router: everything runs a
 - **Never put to sleep:** Termux is excluded from battery optimization and holds a wake lock.
 - **Recovers on its own:** everything starts on boot, and a bootloop-protection module guards against bad Magisk modules.
 
-Uptime at the time of writing: **45 days** without a reboot.
+Uptime at the time of writing: **53 days** without a reboot.
 
 ## Engineering highlights
 
