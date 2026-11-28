@@ -30,19 +30,53 @@ No cloud server, no subscription, no open ports on the router: everything runs a
 
 ## Screenshots
 
-### Home screen
+### Home screen, two themes
 
-<img src="docs/images/dashboard.jpg" alt="Home dashboard" width="100%">
-
-<p align="center">
-  <img src="docs/images/dashboard_mobile.jpg" alt="Home dashboard on iPhone" width="360"><br>
-  <sub>The same dashboard on an iPhone</sub>
-</p>
+<table>
+  <tr>
+    <td width="50%" valign="top"><img src="docs/images/home_dark.jpg" alt="Home screen, dark theme"><br><sub><b>Dark theme</b> (user A)</sub></td>
+    <td width="50%" valign="top"><img src="docs/images/home_light.jpg" alt="Home screen, light theme"><br><sub><b>Light theme</b> (user B)</sub></td>
+  </tr>
+</table>
 
 ### Remotes
-AC remote (IR, sent by the ESP32) and TV remote.
 
-<img src="docs/images/remotes.jpg" alt="AC and TV remotes" width="100%">
+<table>
+  <tr>
+    <td width="33%" valign="top"><img src="docs/images/remote_bedroom.jpg" alt="Bedroom TV remote"><br><sub><b>Bedroom TV</b> (Tizen), with a TV/box toggle and exact volume</sub></td>
+    <td width="33%" valign="top"><img src="docs/images/remote_living_room.jpg" alt="Living-room TV remote"><br><sub><b>Living-room TV</b> (2013 model, legacy protocol), inputs switched over UPnP</sub></td>
+    <td width="33%" valign="top"><img src="docs/images/remote_ac.jpg" alt="AC remote"><br><sub><b>AC</b> (IR through the ESP32), with a learning mode</sub></td>
+  </tr>
+</table>
+
+### My matches
+
+<table>
+  <tr>
+    <td width="33%" valign="top"><img src="docs/images/match_live.jpg" alt="Live match and next match"><br><sub><b>Live score</b> and a countdown to the next match</sub></td>
+    <td width="33%" valign="top"><img src="docs/images/match_lineups.jpg" alt="Match lineups"><br><sub><b>Lineups</b> drawn on a pitch</sub></td>
+    <td width="33%" valign="top"><img src="docs/images/match_table.jpg" alt="League table"><br><sub><b>League table</b> with both teams highlighted</sub></td>
+  </tr>
+</table>
+
+### Weather and personal area
+
+<table>
+  <tr>
+    <td width="50%" valign="top"><img src="docs/images/weather_sheet.jpg" alt="Weather sheet"><br><sub><b>Weather:</b> home (ESP32 sensor) vs outside (Open-Meteo), hourly and 7-day forecast</sub></td>
+    <td width="50%" valign="top"><img src="docs/images/personal.jpg" alt="Personal area"><br><sub><b>Personal area:</b> weekly workout goal and the next match</sub><br><br><img src="docs/images/recipes.jpg" alt="Recipe book" width="70%"><br><sub><b>Recipe book</b></sub></td>
+  </tr>
+</table>
+
+### Assistant and maintenance
+
+<table>
+  <tr>
+    <td width="33%" valign="top"><img src="docs/images/ai_assistant.jpg" alt="AI assistant"><br><sub><b>AI assistant</b> turning on the living-room TV</sub></td>
+    <td width="33%" valign="top"><img src="docs/images/updates.jpg" alt="Update history"><br><sub><b>Updates:</b> deploy history with one-tap rollback</sub></td>
+    <td width="33%" valign="top"><img src="docs/images/dev_mode.jpg" alt="Developer mode"><br><sub><b>Developer mode:</b> a whitelisted in-app terminal</sub></td>
+  </tr>
+</table>
 
 ### Monitoring
 
@@ -50,16 +84,6 @@ AC remote (IR, sent by the ESP32) and TV remote.
   <tr>
     <td width="50%" valign="top"><img src="docs/images/esp32_health.jpg" alt="ESP32 health"><br><sub><b>ESP32 health:</b> messages received vs expected, and an outage log with a probable cause</sub></td>
     <td width="50%" valign="top"><img src="docs/images/server_status.jpg" alt="Server status"><br><sub><b>Server status:</b> battery, services, uptime and Wi-Fi of the phone</sub></td>
-  </tr>
-</table>
-
-### Everyday features
-
-<table>
-  <tr>
-    <td width="33%" valign="top"><img src="docs/images/ai_assistant.jpg" alt="AI assistant"><br><sub><b>AI assistant</b> turning on the living-room TV</sub></td>
-    <td width="33%" valign="top"><img src="docs/images/recipes.jpg" alt="Recipe book"><br><sub><b>Recipe book</b></sub></td>
-    <td width="33%" valign="top"><img src="docs/images/workouts.jpg" alt="Workout tracker"><br><sub><b>Workout tracker</b></sub></td>
   </tr>
 </table>
 
@@ -96,7 +120,7 @@ Uptime at the time of writing: **45 days** without a reboot.
 
 **Safe deploys with rollback.** Code is only edited on the laptop. One script sends it to the phone, where the installer refuses any package that contains data or secrets, syntax-checks every Python and shell file, backs up the running version, installs only the files that changed and restarts only what needs it. Mosquitto is never restarted, so the ESP32 stays connected. If the new server does not answer, the backup is restored automatically. Any earlier version can also be restored from the app.
 
-**Faster TV status.** Device checks run in parallel, a TV that is off is not asked for its volume, and statuses are cached for a few seconds. The app shows the last known state immediately while it refreshes.
+**Faster TV control.** Device checks run in parallel, a TV that is off is not asked for its volume, and statuses are cached for a few seconds. TV commands run as background jobs, so when buttons are pressed quickly only the latest command is carried out. The app shows the last known state immediately while it refreshes, and responses are compressed.
 
 | Request (measured on the phone) | Before | After |
 |---|---|---|
